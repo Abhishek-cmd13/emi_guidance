@@ -1,319 +1,172 @@
-// Simple Loan Calculator for Everyone
-// कर्ज मुक्ति - Loan Mukti
+// Simple Loan Calculator
+let count = 0;
 
-let loanCount = 0;
+window.onload = () => addLoan();
 
-// Start with one loan card
-document.addEventListener('DOMContentLoaded', () => {
-    addLoan();
-});
-
-// Add a new loan
 function addLoan() {
-    loanCount++;
-    const container = document.getElementById('loansContainer');
-    
-    const loanDiv = document.createElement('div');
-    loanDiv.className = 'loan-item';
-    loanDiv.id = `loan-${loanCount}`;
-    
-    loanDiv.innerHTML = `
-        <div class="loan-header">
-            <span class="loan-title">लोन ${loanCount} (Loan ${loanCount})</span>
-            <button class="remove-btn" onclick="removeLoan(${loanCount})">×</button>
+    count++;
+    const div = document.createElement('div');
+    div.className = 'loan-card';
+    div.id = `loan${count}`;
+    div.innerHTML = `
+        <div class="title">
+            <span>📄 लोन ${count}</span>
+            <button class="remove-btn" onclick="remove(${count})">×</button>
         </div>
-        <div class="loan-fields">
+        <div class="fields">
             <div class="field">
-                <label>बैंक/लेंडर का नाम <span>(Bank/Lender Name)</span></label>
-                <input type="text" id="name-${loanCount}" placeholder="जैसे: HDFC Bank">
+                <label>बैंक का नाम (Bank Name)</label>
+                <input type="text" id="bank${count}" placeholder="HDFC, SBI, etc.">
             </div>
-            <div class="two-cols">
+            <div class="row">
                 <div class="field">
-                    <label>बकाया राशि ₹ <span>(Amount Due)</span></label>
-                    <input type="number" id="amount-${loanCount}" placeholder="300000" inputmode="numeric">
+                    <label>बकाया ₹ (Due Amount)</label>
+                    <input type="number" id="amt${count}" placeholder="300000" inputmode="numeric">
                 </div>
                 <div class="field">
-                    <label>ब्याज दर % <span>(Interest Rate)</span></label>
-                    <input type="number" id="rate-${loanCount}" placeholder="12" inputmode="decimal" step="0.1">
+                    <label>ब्याज % (Interest)</label>
+                    <input type="number" id="rate${count}" placeholder="12" inputmode="decimal">
                 </div>
             </div>
             <div class="field">
-                <label>सेटलमेंट ऑफर ₹ <span>(Settlement Offer - if any)</span></label>
-                <input type="number" id="settle-${loanCount}" placeholder="खाली छोड़ें अगर नहीं है" inputmode="numeric">
+                <label>सेटलमेंट ऑफर ₹ (Settlement - optional)</label>
+                <input type="number" id="settle${count}" placeholder="खाली छोड़ें" inputmode="numeric">
             </div>
         </div>
     `;
+    document.getElementById('loans').appendChild(div);
+}
+
+function remove(id) {
+    document.getElementById(`loan${id}`)?.remove();
+    if (document.getElementById('loans').children.length === 0) addLoan();
+}
+
+function calculate() {
+    const budget = parseFloat(document.getElementById('budget').value) || 0;
     
-    container.appendChild(loanDiv);
-}
-
-// Remove a loan
-function removeLoan(id) {
-    const loan = document.getElementById(`loan-${id}`);
-    if (loan) {
-        loan.remove();
+    if (budget <= 0) {
+        alert('⚠️ कृपया मासिक बचत भरें');
+        return;
     }
     
-    // Keep at least one loan
-    const container = document.getElementById('loansContainer');
-    if (container.children.length === 0) {
-        addLoan();
-    }
-}
-
-// Show error message
-function showError(message) {
-    const toast = document.createElement('div');
-    toast.className = 'toast';
-    toast.textContent = message;
-    document.body.appendChild(toast);
-    
-    setTimeout(() => toast.remove(), 3000);
-}
-
-// Format currency
-function formatMoney(amount) {
-    return '₹' + Math.round(amount).toLocaleString('en-IN');
-}
-
-// Format months
-function formatTime(months) {
-    if (months < 12) {
-        return `${months} महीने (${months} months)`;
-    }
-    const years = Math.floor(months / 12);
-    const remaining = months % 12;
-    if (remaining === 0) {
-        return `${years} साल (${years} year${years > 1 ? 's' : ''})`;
-    }
-    return `${years} साल ${remaining} महीने (${years}y ${remaining}m)`;
-}
-
-// Collect loan data
-function getLoans() {
     const loans = [];
-    const items = document.querySelectorAll('.loan-item');
-    
-    items.forEach(item => {
-        const id = item.id.split('-')[1];
-        const name = document.getElementById(`name-${id}`).value.trim() || `Loan ${id}`;
-        const amount = parseFloat(document.getElementById(`amount-${id}`).value) || 0;
-        const rate = parseFloat(document.getElementById(`rate-${id}`).value) || 0;
-        const settle = parseFloat(document.getElementById(`settle-${id}`).value) || 0;
-        
-        if (amount > 0) {
+    document.querySelectorAll('.loan-card').forEach(card => {
+        const id = card.id.replace('loan', '');
+        const amt = parseFloat(document.getElementById(`amt${id}`).value) || 0;
+        if (amt > 0) {
             loans.push({
-                name,
-                amount,
-                rate,
-                monthlyRate: rate / 12 / 100,
-                settlement: settle > 0 ? settle : null,
-                savings: settle > 0 ? amount - settle : 0
+                name: document.getElementById(`bank${id}`).value || `Loan ${id}`,
+                amount: amt,
+                rate: parseFloat(document.getElementById(`rate${id}`).value) || 0,
+                settle: parseFloat(document.getElementById(`settle${id}`).value) || 0
             });
         }
     });
     
-    return loans;
-}
-
-// Calculate best strategy
-function calculate() {
-    const budget = parseFloat(document.getElementById('monthlyBudget').value) || 0;
-    const loans = getLoans();
-    
-    // Validation
-    if (budget <= 0) {
-        showError('⚠️ कृपया मासिक बचत राशि भरें (Please enter monthly budget)');
-        return;
-    }
-    
     if (loans.length === 0) {
-        showError('⚠️ कृपया कम से कम एक लोन की जानकारी भरें (Please add at least one loan)');
+        alert('⚠️ कम से कम एक लोन भरें');
         return;
     }
     
-    // Calculate strategies
-    const regular = calculateRegularPayoff(loans, budget);
-    const settlement = calculateSettlementStrategy(loans, budget);
+    // Calculate
+    let totalPay = 0;
+    let totalSave = 0;
+    let months = 0;
+    const steps = [];
     
-    // Pick better strategy
-    const best = settlement.totalCost < regular.totalCost ? settlement : regular;
+    // Sort: settlements first (by amount), then by interest rate
+    const withSettle = loans.filter(l => l.settle > 0).sort((a, b) => a.settle - b.settle);
+    const noSettle = loans.filter(l => l.settle <= 0).sort((a, b) => b.rate - a.rate);
+    
+    // Handle settlements
+    withSettle.forEach(loan => {
+        const m = Math.ceil(loan.settle / budget);
+        months += m;
+        totalPay += loan.settle;
+        totalSave += loan.amount - loan.settle;
+        steps.push({
+            name: loan.name,
+            action: `सेटलमेंट करें (₹${formatNum(loan.amount - loan.settle)} बचत)`,
+            amount: loan.settle,
+            month: months
+        });
+    });
+    
+    // Handle regular loans
+    noSettle.forEach(loan => {
+        const monthlyRate = loan.rate / 12 / 100;
+        let balance = loan.amount;
+        let loanMonths = 0;
+        
+        while (balance > 1 && loanMonths < 600) {
+            balance += balance * monthlyRate;
+            balance -= Math.min(budget, balance);
+            loanMonths++;
+            totalPay += Math.min(budget, balance + budget);
+        }
+        
+        months += loanMonths;
+        steps.push({
+            name: loan.name,
+            action: `पूरा चुकाएं (Pay in full)`,
+            amount: loan.amount,
+            month: months
+        });
+    });
     
     // Show results
-    showResults(best, loans, budget);
+    showResults(months, totalPay, totalSave, steps);
 }
 
-// Calculate regular payoff (avalanche method - highest interest first)
-function calculateRegularPayoff(loans, budget) {
-    const timeline = [];
-    let totalInterest = 0;
-    let totalMonths = 0;
-    
-    // Sort by interest rate (highest first)
-    const sorted = [...loans].sort((a, b) => b.rate - a.rate);
-    const active = sorted.map(l => ({ ...l, balance: l.amount }));
-    
-    while (active.length > 0 && totalMonths < 600) {
-        totalMonths++;
-        
-        // Add interest to all loans
-        active.forEach(loan => {
-            const interest = loan.balance * loan.monthlyRate;
-            loan.balance += interest;
-            totalInterest += interest;
-        });
-        
-        // Pay towards loans (prioritize first loan)
-        let remaining = budget;
-        for (let i = 0; i < active.length && remaining > 0; i++) {
-            const payment = Math.min(remaining, active[i].balance);
-            active[i].balance -= payment;
-            remaining -= payment;
-        }
-        
-        // Check for paid off loans
-        for (let i = active.length - 1; i >= 0; i--) {
-            if (active[i].balance <= 1) {
-                timeline.push({
-                    name: active[i].name,
-                    month: totalMonths,
-                    amount: active[i].amount,
-                    type: 'regular'
-                });
-                active.splice(i, 1);
-            }
-        }
-    }
-    
-    const totalPrincipal = loans.reduce((sum, l) => sum + l.amount, 0);
-    
-    return {
-        type: 'regular',
-        timeline,
-        totalMonths,
-        totalInterest,
-        totalCost: totalPrincipal + totalInterest,
-        savings: 0
-    };
+function formatNum(n) {
+    return n.toLocaleString('en-IN');
 }
 
-// Calculate settlement strategy
-function calculateSettlementStrategy(loans, budget) {
-    const timeline = [];
-    let totalCost = 0;
-    let totalMonths = 0;
-    let totalSavings = 0;
-    
-    // Separate settlement and regular loans
-    const settlementLoans = loans.filter(l => l.settlement !== null).sort((a, b) => a.settlement - b.settlement);
-    const regularLoans = loans.filter(l => l.settlement === null).sort((a, b) => b.rate - a.rate);
-    
-    // First, handle settlements
-    for (const loan of settlementLoans) {
-        const monthsNeeded = Math.ceil(loan.settlement / budget);
-        totalMonths += monthsNeeded;
-        totalCost += loan.settlement;
-        totalSavings += loan.savings;
-        
-        timeline.push({
-            name: loan.name,
-            month: totalMonths,
-            amount: loan.settlement,
-            originalAmount: loan.amount,
-            savings: loan.savings,
-            type: 'settlement'
-        });
-    }
-    
-    // Then, handle regular loans
-    if (regularLoans.length > 0) {
-        const regularResult = calculateRegularPayoff(regularLoans, budget);
-        
-        regularResult.timeline.forEach(item => {
-            timeline.push({
-                ...item,
-                month: item.month + totalMonths
-            });
-        });
-        
-        totalMonths += regularResult.totalMonths;
-        totalCost += regularResult.totalCost;
-    }
-    
-    return {
-        type: 'settlement',
-        timeline,
-        totalMonths,
-        totalCost,
-        savings: totalSavings
-    };
-}
-
-// Show results
-function showResults(result, loans, budget) {
-    const resultsDiv = document.getElementById('results');
-    const resultBox = document.getElementById('resultBox');
-    
-    const totalDebt = loans.reduce((sum, l) => sum + l.amount, 0);
+function showResults(months, total, saved, steps) {
+    const years = Math.floor(months / 12);
+    const m = months % 12;
+    const timeText = years > 0 
+        ? `${years} साल ${m > 0 ? m + ' महीने' : ''}`
+        : `${months} महीने`;
     
     let html = `
-        <div class="result-summary">
-            <div class="label">आप कर्ज मुक्त होंगे (You'll be debt-free in)</div>
-            <div class="big-number">${formatTime(result.totalMonths)}</div>
-            <div class="label">कुल भुगतान: ${formatMoney(result.totalCost)}</div>
+        <div class="result-card success">
+            <div class="icon">🎉</div>
+            <div class="sub">आप कर्ज मुक्त होंगे</div>
+            <div class="big">${timeText}</div>
+            <div class="sub">(${months} months)</div>
         </div>
     `;
     
-    if (result.savings > 0) {
+    if (saved > 0) {
         html += `
-            <div class="savings-box">
-                <div class="label">🎉 सेटलमेंट से आप बचाएंगे (You'll save with settlement)</div>
-                <div class="amount">${formatMoney(result.savings)}</div>
+            <div class="result-card savings">
+                <div class="icon">💰</div>
+                <div class="sub">सेटलमेंट से बचत</div>
+                <div class="big">₹${formatNum(saved)}</div>
             </div>
         `;
     }
     
     html += `
-        <div class="timeline">
-            <h3>📅 यह करें (Do This)</h3>
+        <div class="steps">
+            <h3>📋 यह करें (Action Plan)</h3>
+            ${steps.map((s, i) => `
+                <div class="step">
+                    <div class="num">${i + 1}</div>
+                    <div class="info">
+                        <div class="name">${s.name}</div>
+                        <div class="action">${s.action}</div>
+                    </div>
+                    <div class="amount">₹${formatNum(s.amount)}</div>
+                </div>
+            `).join('')}
+        </div>
     `;
     
-    result.timeline.forEach((item, index) => {
-        if (item.type === 'settlement') {
-            html += `
-                <div class="timeline-item settlement">
-                    <div class="timeline-step">${index + 1}</div>
-                    <div class="timeline-content">
-                        <div class="timeline-lender">${item.name}</div>
-                        <div class="timeline-action">
-                            सेटलमेंट करें • ${formatMoney(item.savings)} बचत
-                            <br>Settle & save ${formatMoney(item.savings)}
-                        </div>
-                    </div>
-                    <div class="timeline-amount">${formatMoney(item.amount)}<br>महीना ${item.month}</div>
-                </div>
-            `;
-        } else {
-            html += `
-                <div class="timeline-item">
-                    <div class="timeline-step">${index + 1}</div>
-                    <div class="timeline-content">
-                        <div class="timeline-lender">${item.name}</div>
-                        <div class="timeline-action">पूरा चुकाएं • Pay in full</div>
-                    </div>
-                    <div class="timeline-amount">${formatMoney(item.amount)}<br>महीना ${item.month}</div>
-                </div>
-            `;
-        }
-    });
-    
-    html += '</div>';
-    
-    resultBox.innerHTML = html;
-    resultsDiv.classList.add('visible');
-    
-    // Scroll to results
-    setTimeout(() => {
-        resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 100);
+    const result = document.getElementById('result');
+    result.innerHTML = html;
+    result.className = 'result show';
+    result.scrollIntoView({ behavior: 'smooth' });
 }
