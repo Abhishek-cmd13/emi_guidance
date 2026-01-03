@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Mukti - कर्ज मुक्ति</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>🏦 Loan Mukti</h1>
+        <p>अपना कर्ज जल्दी चुकाएं • Pay Off Loans Faster</p>
+    </header>
+
+    <main>
+        <!-- Step 1: Monthly Budget -->
+        <section class="card">
+            <div class="step-badge">1</div>
+            <h2>💰 आप हर महीने कितना बचा सकते हैं?</h2>
+            <p class="subtitle">How much can you save every month?</p>
+            <div class="big-input">
+                <span class="rupee">₹</span>
+                <input type="number" id="monthlyBudget" placeholder="25000" inputmode="numeric">
+            </div>
+        </section>
+
+        <!-- Step 2: Add Loans -->
+        <section class="card">
+            <div class="step-badge">2</div>
+            <h2>📋 अपने लोन की जानकारी भरें</h2>
+            <p class="subtitle">Enter your loan details</p>
+            
+            <div id="loansContainer">
+                <!-- Loans will be added here -->
+            </div>
+
+            <button class="add-btn" onclick="addLoan()">
+                ➕ और लोन जोड़ें (Add Another Loan)
+            </button>
+        </section>
+
+        <!-- Big Calculate Button -->
+        <button class="calculate-btn" onclick="calculate()">
+            🎯 सबसे अच्छा तरीका बताएं<br>
+            <span>Show Best Way to Pay</span>
+        </button>
+
+        <!-- Results Section -->
+        <section class="results-card" id="results">
+            <h2>✅ आपके लिए सबसे अच्छा तरीका</h2>
+            <p class="subtitle">Best Strategy For You</p>
+            
+            <div class="result-box" id="resultBox">
+                <!-- Results will appear here -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Made with ❤️ for Indian families</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

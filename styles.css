@@ -1,0 +1,494 @@
+/* Simple, Clean Design for Everyone */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #333;
+}
+
+/* Header */
+header {
+    text-align: center;
+    color: white;
+    padding: 30px 20px;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+header p {
+    font-size: 1.1rem;
+    opacity: 0.95;
+}
+
+/* Main Container */
+main {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Cards */
+.card {
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    position: relative;
+}
+
+.step-badge {
+    position: absolute;
+    top: -15px;
+    left: 25px;
+    background: #ff6b6b;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    font-weight: 700;
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+}
+
+.card h2 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+    margin-top: 10px;
+}
+
+.subtitle {
+    font-size: 0.95rem;
+    color: #888;
+    margin-bottom: 20px;
+}
+
+/* Big Input for Monthly Budget */
+.big-input {
+    display: flex;
+    align-items: center;
+    background: #f8f9fa;
+    border: 3px solid #e9ecef;
+    border-radius: 15px;
+    padding: 5px;
+    transition: all 0.3s;
+}
+
+.big-input:focus-within {
+    border-color: #667eea;
+    background: white;
+}
+
+.big-input .rupee {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #667eea;
+    padding: 0 15px;
+}
+
+.big-input input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-size: 2rem;
+    font-weight: 600;
+    padding: 15px 10px;
+    outline: none;
+    color: #333;
+}
+
+.big-input input::placeholder {
+    color: #ccc;
+}
+
+/* Loan Card */
+.loan-item {
+    background: #f8f9fa;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 15px;
+    border: 2px solid #e9ecef;
+}
+
+.loan-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.loan-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #667eea;
+}
+
+.remove-btn {
+    background: #ff6b6b;
+    color: white;
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    font-size: 1.3rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loan-fields {
+    display: grid;
+    gap: 15px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.field label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #555;
+}
+
+.field label span {
+    color: #888;
+    font-weight: 400;
+}
+
+.field input {
+    padding: 14px 16px;
+    font-size: 1.1rem;
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    outline: none;
+    transition: all 0.3s;
+    font-family: inherit;
+}
+
+.field input:focus {
+    border-color: #667eea;
+    background: white;
+}
+
+.field input::placeholder {
+    color: #bbb;
+}
+
+/* Two column layout for some fields */
+.two-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+@media (max-width: 500px) {
+    .two-cols {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Add Loan Button */
+.add-btn {
+    width: 100%;
+    padding: 18px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    font-family: inherit;
+    background: white;
+    color: #667eea;
+    border: 3px dashed #667eea;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.add-btn:hover {
+    background: #667eea;
+    color: white;
+    border-style: solid;
+}
+
+/* Calculate Button - Very Prominent */
+.calculate-btn {
+    width: 100%;
+    padding: 25px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    font-family: inherit;
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 40px rgba(17, 153, 142, 0.4);
+    transition: all 0.3s;
+    line-height: 1.4;
+}
+
+.calculate-btn span {
+    font-size: 1rem;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+.calculate-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 50px rgba(17, 153, 142, 0.5);
+}
+
+.calculate-btn:active {
+    transform: translateY(-1px);
+}
+
+/* Results Card */
+.results-card {
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    display: none;
+    animation: slideUp 0.5s ease;
+}
+
+.results-card.visible {
+    display: block;
+}
+
+.results-card h2 {
+    font-size: 1.4rem;
+    color: #11998e;
+    margin-bottom: 5px;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Result Box */
+.result-box {
+    margin-top: 20px;
+}
+
+.result-summary {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    color: white;
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.result-summary .big-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 10px 0;
+}
+
+.result-summary .label {
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+.savings-box {
+    background: #fff3cd;
+    border: 2px solid #ffc107;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.savings-box .amount {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #856404;
+}
+
+.savings-box .label {
+    color: #856404;
+    font-size: 1rem;
+}
+
+/* Timeline */
+.timeline {
+    margin-top: 20px;
+}
+
+.timeline h3 {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.timeline-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    border-left: 4px solid #667eea;
+}
+
+.timeline-item.settlement {
+    border-left-color: #11998e;
+    background: #e8f5e9;
+}
+
+.timeline-step {
+    background: #667eea;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.timeline-item.settlement .timeline-step {
+    background: #11998e;
+}
+
+.timeline-content {
+    flex: 1;
+}
+
+.timeline-lender {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.timeline-action {
+    font-size: 0.95rem;
+    color: #666;
+    margin-top: 3px;
+}
+
+.timeline-amount {
+    font-weight: 600;
+    color: #667eea;
+    font-size: 1.1rem;
+}
+
+.timeline-item.settlement .timeline-amount {
+    color: #11998e;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 30px;
+    color: white;
+    opacity: 0.8;
+}
+
+/* Error Toast */
+.toast {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ff6b6b;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 500;
+    box-shadow: 0 5px 20px rgba(255, 107, 107, 0.4);
+    z-index: 1000;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+/* Hide number input spinners */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    body {
+        padding: 15px;
+    }
+    
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    .card {
+        padding: 20px;
+    }
+    
+    .card h2 {
+        font-size: 1.2rem;
+    }
+    
+    .big-input input {
+        font-size: 1.5rem;
+    }
+    
+    .big-input .rupee {
+        font-size: 1.5rem;
+    }
+    
+    .calculate-btn {
+        font-size: 1.3rem;
+        padding: 20px;
+    }
+    
+    .result-summary .big-number {
+        font-size: 2rem;
+    }
+}
