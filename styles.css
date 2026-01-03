@@ -446,6 +446,193 @@ footer {
     }
 }
 
+/* Summary Dashboard */
+.summary-dashboard {
+    margin-bottom: 25px;
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.summary-stat {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+    border: 2px solid #e9ecef;
+    transition: all 0.3s;
+}
+
+.summary-stat.highlight {
+    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+    border-color: #28a745;
+}
+
+.stat-icon {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+}
+
+.stat-value {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.stat-value.date-value {
+    font-size: 1.1rem;
+}
+
+.stat-label {
+    font-size: 0.75rem;
+    color: #666;
+    line-height: 1.3;
+}
+
+/* Strategy Section */
+.strategies-title {
+    font-size: 1.1rem;
+    color: #333;
+    margin: 20px 0 15px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.strategies-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.strategy-card {
+    background: #f8f9fa;
+    border: 2px solid #e9ecef;
+    border-radius: 15px;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+}
+
+.strategy-card:hover {
+    border-color: #667eea;
+    background: #f0f4ff;
+}
+
+.strategy-card.active {
+    border-color: #667eea;
+    background: #f0f4ff;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+}
+
+.strategy-card.recommended {
+    border-color: #11998e;
+    background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+}
+
+.strategy-card.recommended.active {
+    box-shadow: 0 4px 15px rgba(17, 153, 142, 0.3);
+}
+
+.recommended-badge {
+    position: absolute;
+    top: -10px;
+    right: 15px;
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(17, 153, 142, 0.3);
+}
+
+.strategy-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.strategy-icon {
+    font-size: 2rem;
+}
+
+.strategy-names {
+    flex: 1;
+}
+
+.strategy-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.strategy-name-hi {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.strategy-desc {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 12px;
+    line-height: 1.4;
+}
+
+.strategy-stats {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.strategy-stat {
+    display: flex;
+    flex-direction: column;
+}
+
+.strategy-stat .stat-num {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.strategy-stat .stat-text {
+    font-size: 0.7rem;
+    color: #888;
+}
+
+.strategy-stat.savings .stat-num {
+    color: #28a745;
+}
+
+/* Strategy Detail Box */
+.strategy-detail-box {
+    background: white;
+    border: 2px solid #e9ecef;
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 15px;
+}
+
+.strategy-detail-box h3 {
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.strategy-detail-box h4 {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 12px;
+}
+
 /* Hide number input spinners */
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
